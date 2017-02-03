@@ -166,7 +166,7 @@ console.log('5');
           console.log('7');
                   res.send({
                     "message": {
-                      "text": kakaousers.name+"님...반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?)"},
+                      "text": kakaousers.name+"님...반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?) \n\n 바쁜 일이 많아서 2/7일부터 추가 개발이 있을 예정입니다."},
                     "keyboard": {
                       "type": "buttons",
                       "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
@@ -276,7 +276,7 @@ console.log('17');
           "keyboard": {
             "type": "buttons",
             "buttons": [
-              "캐릭터생성",
+              "닉네임설정",
               "처음으로"
             ]
           }
