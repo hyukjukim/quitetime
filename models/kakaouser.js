@@ -1,6 +1,7 @@
 
 // models/Kakaouser.js
 
+
 var mongoose = require('mongoose');
 
 //user 관리를 위한 Schema를 생성합니다.
