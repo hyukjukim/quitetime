@@ -1,9 +1,14 @@
 // 카카오톡 기록 사이트
 var express = require('express');
 var mongoose = require('mongoose');
+// body-parser module를 bodyPaser 변수에 담습니다.
 var bodyParser = require("body-parser");
+//method-override module을 methodOverride변수에 담습니다.
+var methodOverride = require("method-override");
 var app = express();
-
+var name_flag_array = new Array("");
+var name_array = new Array("");
+var kakaousers = '';
 
 //DB Setting : 환경 변수를 사용하여 MONGO_DB에 접속합니다.
 mongoose.connect(process.env.MONGO_DB);
@@ -18,8 +23,60 @@ db.on('error', function(err) {
     console.log("** DB CONNECTION ERR : **", err);
 });
 
+/*mongoose.Schema 함수를 사용해서 schema(data구조를 미리 정의해 놓는 것) object를 생성합니다.
+사용할 Data의 형태를 object로 생성한 다음 mongoose.Schema함수에 넣습니다.
+kakaomsg schema를 잠시 살펴보면 user_key, type, content 항목들을 가지고 있으며 새 항목 모두 타입은 String입니다.
+나머지 사용가능한 schema type들은 mongoose  공식사이트(http://mongoosejs.com/docs/schematypes.html)에서 확인해 주세요.*/
+
+var kakaomsgSchema = mongoose.Schema({
+    user_key: {
+        type: String
+    },
+    name: {
+        type: String
+    },
+    type: {
+        type: String
+    },
+    content: {
+        type: String
+    }
+});
+//mongoose.model함수를 사용하여 kakaomsg schema의 model을 생성합니다 kakaomsg에 일반적으로 s가 붙어서 테이블 생성
+var Kakaomsg = mongoose.model("kakaomsg", kakaomsgSchema);
+
+//user 관리를 위한 Schema를 생성합니다.
+var kakaouserSchema = mongoose.Schema({
+    user_key: {
+        type: String,
+        unique: true
+    },
+    name: {
+        type: String,
+    },
+    password: {
+        type: String
+    },
+    email: {
+        type: String
+    },
+    name_flag: {
+        type: String
+    },
+    password_flag: {
+        type: String
+    },
+    email_flag: {
+        type: String
+    }
+});
+//KakaoUser 변수로 테이블에 접근
+var KakaoUser = mongoose.model("kakaouser", kakaouserSchema);
+
 //PORT 지정하는 부분
 app.set('port', (process.env.PORT || 5000));
+//ejs파일을 사용하기 위해서는 res.render 함수를 사용해야 하며, 첫번째 parameter로 ejs의 이름을,
+//두번째 parameter로 ejs에서 사용될 object를 전달합니다. res.render함수는 ejs를 /views 폴더에서 찾으므로 views폴더의 이름은 변경되면 안됩니다.
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/"));
 // bodyParser로 stream의 form data중  json data를 req.body에 옮겨 담습니다
@@ -107,329 +164,200 @@ app.delete("/kakaomsgs/:id", function(req, res) {
 app.get('/keyboard', function(req, res) {
     res.send({
         "type": "buttons",
-        "buttons": ["게임시작"]
+        "buttons": ["시작", "닉네임생성"]
     });
 });
 
 app.post('/message', function(req, res) {
 
-console.log('1');
-    if (req.body.content === '게임시작'){
-      Kakaouser.create({
+    if (req.body.content === '시작') {
+      //접속 유저 초기화
+      KakaoUser.create({
           user_key: req.body.user_key,
-          name_flag: '1',
+          name_flag: '0',
           password_flag: '0',
           email_flag: '0',
-          name: null
+          name: '낯선손'
       },{
           new: true
       }, function(err, users) {
-console.log('2');
-      res.send({
-        "message": {
-          "text": "4차 혁명의 시작. 자동응답 머드게임의 부활. 지금, 시작합니다.\n"
-        },
-        "keyboard": {
-          "type": "buttons",
-          "buttons": [
-            "처음으로"
-          ]
-        }
-      });
-      });
-    }
-    else if(req.body.content === '▶▶옆으로이동'){
-      res.send({
-        "message": {
-          "text": "옆으로 이동은 누르는 버튼이 아니라 옆으로 넘겨보라는 뜻이예요.",
-        },
-        "keyboard": {
-          "type": "buttons",
-          "buttons": [
-            "캐릭터생성",
-            "전투시작",
-            "▶▶옆으로이동",
-            "처음으로",
-            "개발자소개"
-          ]
-        }
-      });
-    }
-    else if(req.body.content === '처음으로'){
-console.log('4');
-      Kakaouser.findOne({
-          'user_key': req.body.user_key
-      }, function(err, users) {
-console.log('5');
-          if (err) return res.json(err);
-          obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
-          kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
-          console.log('6');
-                if(kakaousers.name_flag === '3'){
-          console.log('7');
-                  res.send({
-                    "message": {
-                      "text": kakaousers.name+"님...반갑습니다.(흑흑)\n저는 제13지구의 천사예요..\n"+
-                      "바알의 유혹에 빠져 \n지상으로 떨어졌답니다.\n저를 구해주세요..\n제발..\n다시 천국으로 가기 원해요..\n저와 여행을 떠나 주시겠어요?",
-                      "photo": {
-                        "url": "http://khj.heroku.com/images/start.jpg",
-                        "width": 640,
-                        "height": 480
-                      }
-                    },
-                    "keyboard": {
-                      "type": "buttons",
-                      "buttons": [
-                        "캐릭터생성",
-                        "전투시작",
-                        "▶▶옆으로이동",
-                        "처음으로",
-                        "개발자소개"
-                      ]
-                    }
-                  });
-                }
-                else{
-          console.log('8');
-                        res.send({
-                          "message": {
-                            "text": "안녕하세요...아이디 생성도 안한 초 뉴비님..(흑흑)\n저는 제13지구의 천사예요..\n"+
-                            "바알의 유혹에 빠져 \n지상으로 떨어졌답니다.\n저를 구해주세요..\n제발..\n다시 천국으로 가기 원해요..\n저와 여행을 떠나 주시겠어요?",
-                            "photo": {
-                              "url": "http://khj.heroku.com/images/start.jpg",
-                              "width": 640,
-                              "height": 480
-                            }
-                          },
-                          "keyboard": {
-                            "type": "buttons",
-                            "buttons": [
-                              "캐릭터생성",
-                              "전투시작",
-                              "▶▶옆으로이동",
-                              "처음으로",
-                              "개발자소개"
-                            ]
-                          }
-                        });
-                      }
-
+        console.log(err);
+        obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+        kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
       });
 
-    }
-
-    else if (req.body.content === '개발자소개') {
-console.log('9');
-      res.send({
-        "message": {
-          "text": "안녕하세요.\n 저는 현재 DB 개발자로 재직중인 Programmer 입니다. \n개발 관련 궁금한 사항 및 \n건의or제안사항 있으시면 \nnode-js@naver.com으로 메일 주세요",
-          "photo": {
-            "url": "http://khj.heroku.com/images/master.jpg",
-            "width": 640,
-            "height": 480
-          }
-        },
-        "keyboard": {
-          "type": "buttons",
-          "buttons": [
-            "처음으로"
-          ]
-        }
-      });
-    }
-
-    else if (req.body.content === '캐릭터생성') {
-console.log('10');
-          //hero.creatHero(req,res);
-          res.send({
-              "message": {
-                  "text": "안녕하세요 용사님 반갑습니다."+
-                          "\n전투 떠날 준비가 되셨나요? \n사용하실 닉네임을 말씀 해 주세요."
-              }
-          });
-
-    }
 
 
-    else if (req.body.content === '전투시작') {
-console.log('11');
-          res.send({
+        res.send({
             "message": {
-              "text": "용사님, 안돼요..\n이 앞은 너무 무서워요..\n어디로 가시는거죠?",
-              "photo": {
-                "url": "http://khj.heroku.com/images/devilsgate.jpg",
-                "width": 640,
-                "height": 480
-              }
-            },
-            "keyboard": {
-              "type": "buttons",
-              "buttons": [
-                "지상계전투",
-                "천상계전투",
-                "PvP",
-                "처음으로"
-              ]
+                "text": "안녕하세요 용사님 반갑습니다.\n전투 떠날 준비가 되셨나요? \n혹시 아직 닉네임이 없으시다면 생성 부탁 드립니다. \n(명령어:닉네임생성, 닉네임변경)"
             }
-          });
-      }
+        });
+    }
 
-      else if (req.body.content === '지상계전투'){
-console.log('12');
-        res.send({
-          "message": {
-            "text": "지상계 전투 입니다. 인간들의 평균 전투력은 천사들을 따라 잡을 수 없으나, 현재 전 저주를 받아 아이템이 전혀 없어 매우 약합니다.\n캐릭터 생성이 필요합니다.",
-            "photo": {
-              "url": "http://khj.heroku.com/images/human.jpg",
-              "width": 640,
-              "height": 480
-            }
-          },
-          "keyboard": {
-            "type": "buttons",
-            "buttons": [
-              "처음으로"
-            ]
-          }
-        });
-      }
-      else if (req.body.content === '천상계전투'){
-console.log('13');
-        res.send({
-          "message": {
-            "text": "아직은 너무 빡세...\n캐릭터 생성이 필요합니다.",
-            "photo": {
-              "url": "http://khj.heroku.com/images/sky.jpg",
-              "width": 640,
-              "height": 480
-            }
-          },
-          "keyboard": {
-            "type": "buttons",
-            "buttons": [
-              "처음으로"
-            ]
-          }
-        });
-      }
-      else if (req.body.content === 'PvP'){
-console.log('14');
-        res.send({
-          "message": {
-            "text": "맘에 들지 않는 유저를 척살 가능 합니다. 이기면 해당 유저의 정보는 사라집니다. \n(닉네임 차지 가능)\n캐릭터 생성이 필요합니다.",
-            "photo": {
-              "url": "http://khj.heroku.com/images/pvp.jpg",
-              "width": 640,
-              "height": 480
-            }
-          },
-          "keyboard": {
-            "type": "buttons",
-            "buttons": [
-              "처음으로"
-            ]
-          }
-        });
-      }
-
-      else if (req.body.content === '뚜벅이전사'||req.body.content === '간지러운궁수'||req.body.content === '몸빵약한법사'||req.body.content === '마스터') {
-console.log('15');
-              res.send({
-                "message": {
-                  "text": "2017-01-31.. 구현 중 입니다.",
-                },
-                "keyboard": {
-                  "type": "buttons",
-                  "buttons": [
-                    "처음으로"
-                  ]
-                }
-              });
-      }
-
-      else if (req.body.content === '생성완료'){
-console.log('16');
-        res.send({
-          "message": {
-            "text": "아이디 생성을 축하드립니다. 용사님 지금부터 저와 함께 오지게 빡센 게임을 시작 해봅시다. 님 아이디는 DB에 저장될거예요. 아이디 바꾸고 싶으면 다시 생성하면 됩니다. (회사일이 더 오지게 빡세서 개발은 좀 천천히 할게요..) "
-          },
-          "keyboard": {
-            "type": "buttons",
-            "buttons": [
-              "처음으로"
-            ]
-          }
-        });
-      }
-      else if (req.body.content === '생성취소'){
-console.log('17');
-        res.send({
-          "message": {
-            "text": "아휴 왜이렇게 한번에 생성을 못하실까... 난 "+ kakaousers.name +"좋은데.. 얼른 다시 생성해봐요.. "
-          },
-          "keyboard": {
-            "type": "buttons",
-            "buttons": [
-              "캐릭터생성",
-              "처음으로"
-            ]
-          }
-        });
-
-        Kakaouser.findOneAndUpdate({
+    //닉네임생성 버튼을 누르면
+    if (req.body.content === '닉네임생성') {
+        //닉네임 생성 스타트,
+        KakaoUser.findOneAndUpdate({
             'user_key': req.body.user_key
         }, {
-            'name': '',
             'name_flag': '1'
         }, {
             new: true
         }, function(err, users) {
-console.log('18');
             if (err) {
                 console.log("Something wrong when updating data!");
             }
-            obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
-            kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
-        });
-
-      }
-      else {
-
-console.log('19');
-        Kakaouser.findOneAndUpdate({
-            'user_key': req.body.user_key
-        }, {
-            'name': req.body.content,
-            'name_flag': '3'
-        }, {
-            new: true
-        }, function(err, users) {
-console.log('20');
-            if (err) {
-                console.log("Something wrong when updating data!");
-            }
+            //이름 바꿨다는 뜻으로 name_flag
             obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
             kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
         });
 
         res.send({
-          "message": {
-            "text": "님이 입력하신 아이디는 " +req.body.content +"입니다. 맘에 드십니까? \n(하하)맘에 드시면 [생성완료]\n(흑흑)재 생성은  [생성취소]\n 버튼을 눌러주세요",
-          },
-          "keyboard": {
-            "type": "buttons",
-            "buttons": [
-              "생성완료",
-              "생성취소"
-            ]
-          }
+            "message": {
+                "text": "닉네임생성 버튼을 누르셨습니다. \n사용하실 닉네임을 입력해 주세요."
+            }
         });
-      }
+
+    }
 
 
+    if (kakaousers.name_flag === '1') {
+        //kakaousers 테이블에 접근
+        KakaoUser.findOne({
+            'user_key': req.body.user_key
+        }, function(err, users) {
+            if (err) return res.json(err);
+            obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+            kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+        });
+        if (kakaousers.name === req.body.content) {
+            res.send({
+                "message": {
+                    "text": req.body.content + "는 이미 존재하는 닉네임 입니다.\n\n" + "다시 입력해 주세요"
+                }
+            });
+        }
 
 
+        if (kakaousers.name !== req.body.content && kakaousers.name_flag !== '3') {
+            KakaoUser.findOneAndUpdate({
+                'user_key': req.body.user_key
+            }, {
+                'name': req.body.content,
+                'name_flag': '3'
+            }, {
+                new: true
+            }, function(err, users) {
+                if (err) {
+                    console.log("Something wrong when updating data!");
+                }
+                obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+                kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+            });
+            //생성된 이름 표출
+            res.send({
+                "message": {
+                    "text": "닉네임 생성이 완료 되었습니다.\n\n용사님의 이름은 " + req.body.content + "입니다." +
+                        "\n닉네임 변경을 원하시면 \n<<닉네임변경>>이라고 입력하세요."
+                }
+            });
+        }
+    }
 
+    //닉네임설정 버튼을 누르면
+    if (req.body.content === '닉네임변경') {
+        //닉네임 변경 스타트,
+        KakaoUser.findOneAndUpdate({
+            'user_key': req.body.user_key
+        }, {
+            'name_flag': '2'
+        }, {
+            new: true
+        }, function(err, users) {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+            obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+            kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+            //이름 바꿨다는 뜻으로 name_flag`
+        });
+
+        //이름 바꿀 것인지 질문
+        res.send({
+            "message": {
+                "text": "닉네임변경을 입력 하셨습니다. \n새로운 닉네임을 입력해 주세요."
+            }
+        });
+    }
+
+    if (kakaousers.name_flag === '2') {
+
+        //kakaousers 테이블에 접근
+        KakaoUser.findOne({
+            'user_key': req.body.user_key
+        }, function(err, users) {
+            if (err) return res.json(err);
+            obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+            kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+        });
+
+        if (kakaousers.name === req.body.content) {
+            res.send({
+                "message": {
+                    "text": req.body.content + "는 이미 존재하는 닉네임 입니다.\n\n" + "다시 입력해 주세요"
+                }
+            });
+        }
+        if (kakaousers.name !== req.body.content && kakaousers.name_flag !== '3') {
+            KakaoUser.findOneAndUpdate({
+                'user_key': req.body.user_key
+            }, {
+                'name': req.body.content,
+                'name_flag': '3'
+            }, {
+                new: true
+            }, function(err, users) {
+                if (err) {
+                    console.log("Something wrong when updating data!");
+                }
+                obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+                kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+            });
+
+            //생성된 이름 표출
+            res.send({
+                "message": {
+                    "text": "닉네임 변경이 완료 되었습니다.\n용사님의 이름은 " + req.body.content + "입니다." +
+                        "\n닉네임 변경을 원하시면 \n<<닉네임변경>>이라고 입력하세요."
+                }
+            });
+        }
+    }
+
+    if (kakaousers.name_flag !== '1' & kakaousers.name_flag !== '2' & req.body.content !== '닉네임생성' & req.body.content !== '시작') {
+        KakaoUser.findOne({
+            'user_key': req.body.user_key
+        }, function(err, users) {
+            if (err) return res.json(err);
+            obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+            kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+        });
+        res.send({ //name_array.pop()
+            "message": {
+                "text": kakaousers.name + "님. \n오늘은 여기까지만 할게요." +
+                    "\n\n<<닉네임변경>> 이라고 입력하시면 \n닉네임 변경 가능합니다. \n" +
+                    "\n2017년 다들 새해 복 많이 받으세요~ :) "
+            }
+        });
+
+        Kakaomsg.create({
+            user_key: req.body.user_key,
+            type: req.body.type,
+            content: req.body.content
+        }, function(error, doc) {});
+    }
+    res.sendStatus(200);
 });
 
 app.post('/friend', function(req, res) {
@@ -441,10 +369,5 @@ app.delete('/friend/:user_key', function(req, res) {
 });
 
 app.delete('/chat_room/:user_key', function(req, res) {
-    console.log('바이바이 잘 바이야~');
     res.sendStatus(200);
-});
-
-app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'));
 });
