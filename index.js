@@ -166,7 +166,7 @@ console.log('5');
           console.log('7');
                   res.send({
                     "message": {
-                      "text": kakaousers.name+"님...반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?) \n\n 바쁜 일이 많아서 2/7일부터 추가 개발이 있을 예정입니다."},
+                      "text": kakaousers.name+"님!!!\n반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?) \n\n 바쁜 일이 많아서 2/7일부터 추가 개발이 있을 예정입니다."},
                     "keyboard": {
                       "type": "buttons",
                       "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
@@ -177,7 +177,7 @@ console.log('5');
           console.log('8');
                         res.send({
                           "message": {
-                            "text": "안녕하세요...아직 ID 생성을 안하셨네요? ㅎㅎ 괜찮아요 아직은 ID가 꼭 필요한 것이 아니거든요..^^",
+                            "text": "안녕하세요...아직 닉네임 생성을 안하셨네요? ㅎㅎ 괜찮아요 아직은 닉네임이 꼭 필요한 것이 아니거든요..^^",
                           },
                           "keyboard": {
                             "type": "buttons",
@@ -194,7 +194,7 @@ console.log('5');
 console.log('9');
       res.send({
         "message": {
-          "text": "안녕하세요.\n 저는 ERP DB, Node.js Programmer 입니다. \n컴퓨터과학 전공을 하였으며, AI 및 챗봇 개발을 연구 중입니다. \n개발 관련 궁금한 사항 및 \n건의 or 사업 제안사항 있으시면 \nnode-js@naver.com으로 메일 주세요",
+          "text": "안녕하세요.\n 저는 ERP DB, Node.js Programmer 입니다. \n컴퓨터과학 전공을 하였으며, \nAI 와 Chatbot 개발을 연구 중입니다. \n개발 관련 궁금한 사항 및 \n건의 or 사업 제안사항 있으시면 \nnode-js@naver.com으로 메일 주세요",
           "photo": {
             "url": "http://khj.heroku.com/images/master.jpg",
             "width": 640,
@@ -257,7 +257,7 @@ console.log('16');
 console.log('16');
         res.send({
           "message": {
-            "text": "아이디 생성을 축하드립니다. \n 앞으로 방을 나갔다가 다시 들어오셔도, 님의 이름을 항상 기억할 것 입니다. 해당 기능을 사용하여 추후 많은 컨텐츠를 제작 할 예정이니, 기대하셔도 좋습니다. ^^"
+            "text": "닉네임 생성을 축하드립니다. \n 앞으로 방을 나갔다가 다시 들어오셔도, 님의 이름을 항상 기억할 것 입니다. 해당 기능을 사용하여 추후 많은 컨텐츠를 제작 할 예정이니, 기대하셔도 좋습니다. ^^"
           },
           "keyboard": {
             "type": "buttons",
@@ -320,7 +320,7 @@ console.log('20');
 
         res.send({
           "message": {
-            "text": "입력하신 아이디는 " +req.body.content +"입니다. 맘에 드십니까? \n(하하)맘에 드시면 [생성완료]\n(흑흑)재 생성은  [생성취소]\n 버튼을 눌러주세요",
+            "text": "입력하신 닉네임은 " +req.body.content +"입니다. 맘에 드십니까? \n(하하)맘에 드시면 [생성완료]\n(흑흑)재 생성은   [생성취소]\n 버튼을 눌러주세요",
           },
           "keyboard": {
             "type": "buttons",
