@@ -6,6 +6,7 @@ var methodOverride = require("method-override");
 var app = express();
 var Kakaouser = require("./models/Kakaouser");
 var Kakaomsg = require("./models/Kakaomsg");
+var hero = require("./modules/Hero");
 var name_flag_array = new Array("");
 var name_array = new Array("");
 var kakaousers = '';
@@ -430,6 +431,9 @@ console.log('20');
           }
         });
       }
+
+
+
 
 
 });
