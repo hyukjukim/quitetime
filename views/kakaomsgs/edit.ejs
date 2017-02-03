@@ -1,0 +1,35 @@
+<!-- views/kakaomsgs/edit.ejs -->
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container kakaomsg kakaomsg-edit">
+   <div class="kakaomsg-menu">
+    <a class="btn btn-default" href="/kakaomsgs/<%= kakaomsg._id %>">Back</a>
+   </div>
+   <h2>Edit</h2>
+   <form class="kakaomsg-form" action="/kakaomsgs/<%= kakaomsg._id %>?_method=put" method="post">
+    <div class="form-group">
+     <label for="user_key">user_key</label>
+     <input class="form-control" type="text" id="user_key" name="user_key" value="<%= kakaomsg.user_key %>">
+    </div>
+    <div class="form-group">
+     <label for="type">type</label>
+     <input class="form-control" type="text" id="type" name="type" value="<%= kakaomsg.type %>">
+    </div>
+    <div class="form-group">
+     <label for="content">content</label>
+     <input class="form-control" type="text" id="content" name="content" value="<%= kakaomsg.content %>">
+    </div>
+    <div>
+     <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+   </div>
+  </form>
+ </body>
+</html>

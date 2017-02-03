@@ -1,0 +1,24 @@
+
+<!-- views/kakaomsgs/index.ejs -->
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container kakaomsg kakaomsg-index">
+   <h2>Index</h2>
+   <ul class="list-group">
+    <% kakaomsgs.forEach(function(kakaomsg) { %>
+     <li class="list-group-item">
+      <a href="/kakaomsgs/<%= kakaomsg._id %>"> 입력하신 메세지 (클릭하면 편집 가능) |  <%= kakaomsg.content%>
+     </li>
+
+    <% }) %>
+   </ul>
+  </div>
+ </body>
+</html>

@@ -1,0 +1,29 @@
+<!-- views/kakaomsgs/show.ejs -->
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container kakaomsg kakaomsg-show">
+   <div class="kakaomsg-menu">
+    <a class="btn btn-default" href="/kakaomsgs">Back</a>
+    <a class="btn btn-default" href="/kakaomsgs/<%= kakaomsg._id %>/edit">Edit</a>
+    <form action="/kakaomsgs/<%= kakaomsg._id %>?_method=delete" method="post">
+     <a class="btn btn-default" href="#" onclick="confirm('Do you want to delete this?')?this.parentElement.submit():null;">Delete</a>
+    </form>
+   <div>
+   <h2>Show</h2>
+   <h3>User Key : <%= kakaomsg.user_key%></h3>
+   <div>
+    <label>Message type : </label><span><%= kakaomsg.type %></span>
+   </div>
+   <div>
+    <label>Message contents : </label><span><%= kakaomsg.content %></span>
+   </div>
+  </div>
+ </body>
+</html>
