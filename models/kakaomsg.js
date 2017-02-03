@@ -3,7 +3,6 @@
 
 var mongoose = require('mongoose');
 
-
 var kakaomsgSchema = mongoose.Schema({
     user_key: {
         type: String
