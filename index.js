@@ -1,11 +1,12 @@
 // 카카오톡 기록 사이트
 var express = require('express');
 var mongoose = require('mongoose');
-// body-parser module를 bodyPaser 변수에 담습니다.
 var bodyParser = require("body-parser");
-//method-override module을 methodOverride변수에 담습니다.
 var methodOverride = require("method-override");
 var app = express();
+var Kakaouser = require("./models/Kakaouser");
+var Kakaomsg = require("./models/Kakaomsg");
+var hero = require("./modules/Hero");
 var name_flag_array = new Array("");
 var name_array = new Array("");
 var kakaousers = '';
@@ -23,60 +24,8 @@ db.on('error', function(err) {
     console.log("** DB CONNECTION ERR : **", err);
 });
 
-/*mongoose.Schema 함수를 사용해서 schema(data구조를 미리 정의해 놓는 것) object를 생성합니다.
-사용할 Data의 형태를 object로 생성한 다음 mongoose.Schema함수에 넣습니다.
-kakaomsg schema를 잠시 살펴보면 user_key, type, content 항목들을 가지고 있으며 새 항목 모두 타입은 String입니다.
-나머지 사용가능한 schema type들은 mongoose  공식사이트(http://mongoosejs.com/docs/schematypes.html)에서 확인해 주세요.*/
-
-var kakaomsgSchema = mongoose.Schema({
-    user_key: {
-        type: String
-    },
-    name: {
-        type: String
-    },
-    type: {
-        type: String
-    },
-    content: {
-        type: String
-    }
-});
-//mongoose.model함수를 사용하여 kakaomsg schema의 model을 생성합니다 kakaomsg에 일반적으로 s가 붙어서 테이블 생성
-var Kakaomsg = mongoose.model("kakaomsg", kakaomsgSchema);
-
-//user 관리를 위한 Schema를 생성합니다.
-var kakaouserSchema = mongoose.Schema({
-    user_key: {
-        type: String,
-        unique: true
-    },
-    name: {
-        type: String,
-    },
-    password: {
-        type: String
-    },
-    email: {
-        type: String
-    },
-    name_flag: {
-        type: String
-    },
-    password_flag: {
-        type: String
-    },
-    email_flag: {
-        type: String
-    }
-});
-//KakaoUser 변수로 테이블에 접근
-var KakaoUser = mongoose.model("kakaouser", kakaouserSchema);
-
 //PORT 지정하는 부분
 app.set('port', (process.env.PORT || 5000));
-//ejs파일을 사용하기 위해서는 res.render 함수를 사용해야 하며, 첫번째 parameter로 ejs의 이름을,
-//두번째 parameter로 ejs에서 사용될 object를 전달합니다. res.render함수는 ejs를 /views 폴더에서 찾으므로 views폴더의 이름은 변경되면 안됩니다.
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/"));
 // bodyParser로 stream의 form data중  json data를 req.body에 옮겨 담습니다
@@ -91,7 +40,7 @@ app.use(methodOverride("_method"));
 
 //사이트 root로 이동하는 경우 /kakaomsgs로 redirect 해준다.
 app.get("/", function(req, res) {
-    console.log('main come');
+    res.redirect("/kakaomsgs");
 });
 //root/kakaomsgs로 이동하는 경우. 내가 입력한 모든 Data를 찾아서 보여줍니다. kakaomsgs/index로 redirect 합니다.
 app.get("/kakaomsgs", function(req, res) {
@@ -164,14 +113,14 @@ app.delete("/kakaomsgs/:id", function(req, res) {
 app.get('/keyboard', function(req, res) {
     res.send({
         "type": "buttons",
-        "buttons": ["시작", "닉네임생성"]
+        "buttons": ["게임시작"]
     });
 });
 
 app.post('/message', function(req, res) {
 
-    if (req.body.content === '시작') {}
-    res.sendStatus(200);
+res.sendStatus(200);
+
 });
 
 app.post('/friend', function(req, res) {
@@ -183,5 +132,10 @@ app.delete('/friend/:user_key', function(req, res) {
 });
 
 app.delete('/chat_room/:user_key', function(req, res) {
+    console.log('바이바이 잘 바이야~');
     res.sendStatus(200);
+});
+
+app.listen(app.get('port'), function() {
+    console.log('running on port', app.get('port'));
 });
