@@ -125,7 +125,7 @@ console.log('1');
           name_flag: '1',
           password_flag: '0',
           email_flag: '0',
-          name: null
+          name: ''
       },{
           new: true
       }, function(err, users) {
