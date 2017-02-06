@@ -18,6 +18,7 @@ var bibleSchema = mongoose.Schema({
         type: String
     }
 });
+
 //bible 변수로 테이블에 접근
 var bible = mongoose.model("bible", bibleSchema);
 
