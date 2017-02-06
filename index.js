@@ -100,7 +100,6 @@ app.put("/kakaomsgs/:id", function(req, res) {
         res.redirect("/kakaomsgs/" + req.params.id);
     });
 });
-
 // kakaomsgs - destroy // 7
 app.delete("/kakaomsgs/:id", function(req, res) {
     Kakaomsg.remove({
@@ -110,7 +109,6 @@ app.delete("/kakaomsgs/:id", function(req, res) {
         res.redirect("/kakaomsgs");
     });
 });
-
 //KAKAO TALK
 app.get('/keyboard', function(req, res) {
     res.send({
@@ -135,7 +133,7 @@ console.log('1');
 console.log('2');
       res.send({
         "message": {
-          "text": "샬롬. 자동응답QT 프로그램에 오신 것을 환영합니다. \n본 프로그램은 2017년 2월 3일 최초 개발 되었으며 다양한 방법으로 서비스가 발전되어 나갈 예정입니다.\n오늘은 시간이 없어, 차주 월요일부터 본격적으로 개발해 나갈 생각이니 기다려주세요."
+          "text": "샬롬. 자동응답 QT 프로그램에 오신 것을 환영합니다. \n본 프로그램은 2017년 2월 3일 최초 개발 되었으며 다양한 방법으로 서비스가 발전되어 나갈 예정입니다.\n오늘은 시간이 없어, 차주 월요일부터 본격적으로 개발해 나갈 생각이니 기다려주세요."
         },
         "keyboard": {
           "type": "buttons",
