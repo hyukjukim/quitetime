@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var app = express();
+var bible = require("./models/bible");
 var Kakaouser = require("./models/Kakaouser");
 var Kakaomsg = require("./models/Kakaomsg");
 var name_flag_array = new Array("");
@@ -224,18 +225,26 @@ console.log('10');
 
     else if (req.body.content === '신약QT(랜덤)'){
 console.log('16');
-      res.send({
-        "message": {
-          "text": "[마22:37-38]\n예수께서 가라사대 네 마음을 다하고 목숨을 다하고 뜻을 다하여 주 너의 하나님을 사랑하라 하셨으니, 이것이 크고 첫째 되는 계명이요\n\n"+
-          "추가 기능은 구현 중에 있습니다. 아직은 랜덤 설정이 되지 않습니다. 모든 성경을 랜덤으로 나오게 구현 할 예정입니다."
-        },
-        "keyboard": {
-          "type": "buttons",
-          "buttons": [
-            "처음으로"
-          ]
-        }
-      });
+
+    bible.findOne({
+        'name': '창세기',
+        'jang': '1',
+        'jul' : '1'
+    }, function(err, users) {
+        if (err) return res.json(err);
+        obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+        bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+                res.send({
+                  "message": {
+                    "text": bibles.content},
+                  "keyboard": {
+                    "type": "buttons",
+                    "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
+                  }
+                });
+
+    });
+
     }
 
     else if (req.body.content === '구약QT(랜덤)'){
