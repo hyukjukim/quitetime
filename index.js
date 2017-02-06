@@ -138,7 +138,7 @@ console.log('2');
         },
         "keyboard": {
           "type": "buttons",
-          "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
+          "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","구약QT(랜덤)","신약QT(랜덤)","개발자소개"]
         }
       });
       });
@@ -150,7 +150,7 @@ console.log('2');
         },
         "keyboard": {
           "type": "buttons",
-          "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
+          "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","구약QT(랜덤)","신약QT(랜덤)","개발자소개"]
         }
       });
     }
@@ -171,7 +171,7 @@ console.log('5');
                       "text": kakaousers.name+"님!!!\n반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?) \n\n 바쁜 일이 많아서 2/7일부터 추가 개발이 있을 예정입니다."},
                     "keyboard": {
                       "type": "buttons",
-                      "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
+                      "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","구약QT(랜덤)","신약QT(랜덤)","개발자소개"]
                     }
                   });
                 }
@@ -183,7 +183,7 @@ console.log('5');
                           },
                           "keyboard": {
                             "type": "buttons",
-                            "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
+                            "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","구약QT(랜덤)","신약QT(랜덤)","개발자소개"]
                           }
                         });
                       }
@@ -227,17 +227,17 @@ console.log('10');
 console.log('16');
 
     bible.findOne({
-        'seq':'1'
+        'seq':'32'
     }, function(err, users) {
         if (err) return res.json(err);
         obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
         bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
                 res.send({
                   "message": {
-                    "text": "["+bibles.name+" "+bibles.jang+"장 "+bibles.jul+"절]\n" +bibles.content},
+                    "text": "["+bibles.name+"]\n"+bibles.content},
                   "keyboard": {
                     "type": "buttons",
-                    "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
+                    "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","구약QT(랜덤)","신약QT(랜덤)","개발자소개"]
                   }
                 });
 
