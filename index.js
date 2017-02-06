@@ -242,7 +242,7 @@ console.log('16');
                 });
 
     });
-
+    console.log(bible.count());
     }
 
     else if (req.body.content === '신약QT(랜덤)'){
