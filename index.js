@@ -228,7 +228,7 @@ console.log('10');
 console.log('16');
 
     bible.findOne({
-        'seq': 3//Math.floor(Math.random() * 1534) + 1
+        'seq': Math.floor(Math.random() * 1534) + 1
     }, function(err, users) {
         if (err) return res.json(err);
         obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
