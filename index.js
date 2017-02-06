@@ -248,18 +248,23 @@ console.log('16');
 
     else if (req.body.content === '신약QT(랜덤)'){
 console.log('16');
-      res.send({
-        "message": {
-          "text": "[신6:5]\n 너는 마음을 다하고 성품을 다하고 힘을 다하여 네 하나님 여호와를 사랑하라\n\n"+
-          "추가 기능은 구현 중에 있습니다. 아직은 랜덤 설정이 되지 않습니다. 모든 성경을 랜덤으로 나오게 구현 할 예정입니다."
-        },
-        "keyboard": {
-          "type": "buttons",
-          "buttons": [
-            "처음으로"
-          ]
-        }
-      });
+bible.findOne({
+    'seq': Math.floor(Math.random() * 1072) + 1,
+    'singu' : "신약"
+}, function(err, users) {
+    if (err) return res.json(err);
+    obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+    bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+            res.send({
+              "message": {
+                "text": "["+bibles.name+"]\n"+bibles.content},
+              "keyboard": {
+                "type": "buttons",
+                "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+              }
+            });
+
+});
     }
 
       else if (req.body.content === '생성완료'){

@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var bibleSchema = mongoose.Schema({
     seq: {
         type: String,
-        unique: true
     },
     singu: {
         type: String,
