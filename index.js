@@ -245,7 +245,6 @@ console.log('16');
 
     });
     }
-
     else if (req.body.content === '신약QT(랜덤)'){
 console.log('16');
 bible.findOne({
