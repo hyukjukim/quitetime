@@ -10,6 +10,8 @@ var name_flag_array = new Array("");
 var name_array = new Array("");
 var kakaousers = '';
 
+
+
 //DB Setting : 환경 변수를 사용하여 MONGO_DB에 접속합니다.
 mongoose.connect(process.env.MONGO_DB);
 //mongoose의 DB Object를 가져와 db 변수에 넣습니다.
@@ -18,6 +20,7 @@ var db = mongoose.connection;
 db.once("open", function() {
     console.log("** MONGO_DB CONNECTED **");
 });
+
 //DB 연결 중 에러가 있는 경우
 db.on('error', function(err) {
     console.log("** DB CONNECTION ERR : **", err);
