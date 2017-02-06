@@ -27,6 +27,7 @@ db.on('error', function(err) {
     console.log("** DB CONNECTION ERR : **", err);
 });
 
+
 //PORT 지정하는 부분
 app.set('port', (process.env.PORT || 5000));
 app.set("view engine", "ejs");
