@@ -223,7 +223,7 @@ console.log('10');
 
     }
 
-    else if (req.body.content === '신약QT(랜덤)'){
+    else if (req.body.content === '구약QT(랜덤)'){
 console.log('16');
 
     bible.findOne({
@@ -236,7 +236,7 @@ console.log('16');
         bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
                 res.send({
                   "message": {
-                    "text": bibles.content},
+                    "text": "["+bibles.name+" "+bibles.jang+"장 "+bibles.jul+"절]" +bibles.content},
                   "keyboard": {
                     "type": "buttons",
                     "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
@@ -247,7 +247,7 @@ console.log('16');
 
     }
 
-    else if (req.body.content === '구약QT(랜덤)'){
+    else if (req.body.content === '신약QT(랜덤)'){
 console.log('16');
       res.send({
         "message": {
