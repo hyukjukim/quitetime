@@ -227,16 +227,14 @@ console.log('10');
 console.log('16');
 
     bible.findOne({
-        'name': '창세기',
-        'jang': '1',
-        'jul' : '1'
+        'seq':'1'
     }, function(err, users) {
         if (err) return res.json(err);
         obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
         bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
                 res.send({
                   "message": {
-                    "text": "["+bibles.name+" "+bibles.jang+"장 "+bibles.jul+"절]" +bibles.content},
+                    "text": "["+bibles.name+" "+bibles.jang+"장 "+bibles.jul+"절]\n" +bibles.content},
                   "keyboard": {
                     "type": "buttons",
                     "buttons": ["닉네임설정","처음으로","▶▶옆으로이동","신약QT(랜덤)","구약QT(랜덤)","개발자소개"]
