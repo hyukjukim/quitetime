@@ -143,6 +143,7 @@ console.log('2');
       });
       });
     }
+    
     else if(req.body.content === '▶▶옆으로이동'){
       res.send({
         "message": {
