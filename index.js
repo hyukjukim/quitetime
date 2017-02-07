@@ -7,10 +7,8 @@ var app = express();
 var bible = require("./models/bible");
 var Kakaouser = require("./models/Kakaouser");
 var Kakaomsg = require("./models/Kakaomsg");
-var name_flag_array = new Array("");
-var name_array = new Array("");
 var kakaousers = '';
-
+var d = new Date();
 
 
 //DB Setting : 환경 변수를 사용하여 MONGO_DB에 접속합니다.
@@ -129,7 +127,7 @@ console.log('1');
           church_name: '0',
           score: '0',
           name: '',
-          date: '0',
+          date: '7',
           password: '0',
           email: '0',
           temp1: '0',
@@ -233,6 +231,24 @@ console.log('10');
     else if (req.body.content === '구약QT(랜덤)'){
 console.log('16');
 
+//findOneAndUpdate
+Kakaouser.findOneAndUpdate({
+    'user_key': req.body.user_key
+}, {
+    'date': d.getDay(),
+}, {
+    new: true
+}, function(err, users) {
+console.log('18');
+    if (err) {
+        console.log("Something wrong when updating data!");
+    }
+    obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+    kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+});
+//findOneAndUpdate
+
+//findOne
     bible.findOne({
         'seq': Math.floor(Math.random() * 23144) + 1,
         'singu' : "구약"
@@ -250,9 +266,29 @@ console.log('16');
                 });
 
     });
+//findOne
+
     }
     else if (req.body.content === '신약QT(랜덤)'){
 console.log('16');
+
+//findOneAndUpdate
+Kakaouser.findOneAndUpdate({
+    'user_key': req.body.user_key
+}, {
+    'date': d.getDay(),
+}, {
+    new: true
+}, function(err, users) {
+console.log('18');
+    if (err) {
+        console.log("Something wrong when updating data!");
+    }
+    obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+    kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+});
+//findOneAndUpdate
+//findOne
 bible.findOne({
     'seq': Math.floor(Math.random() * 7957) + 1,
     'singu' : "신약"
@@ -270,6 +306,7 @@ bible.findOne({
             });
 
 });
+//findOne
     }
 
       else if (req.body.content === '생성완료'){
