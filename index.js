@@ -229,7 +229,7 @@ console.log('10');
 console.log('16');
 
     bible.findOne({
-        'seq': Math.floor(Math.random() * 1000) + 1,
+        'seq': Math.floor(Math.random() * 23144) + 1,
         'singu' : "구약"
     }, function(err, users) {
         if (err) return res.json(err);
@@ -249,7 +249,7 @@ console.log('16');
     else if (req.body.content === '신약QT(랜덤)'){
 console.log('16');
 bible.findOne({
-    'seq': Math.floor(Math.random() * 1000) + 1,
+    'seq': Math.floor(Math.random() * 7957) + 1,
     'singu' : "신약"
 }, function(err, users) {
     if (err) return res.json(err);
