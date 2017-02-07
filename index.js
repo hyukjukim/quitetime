@@ -267,7 +267,7 @@ console.log('18');
         }
         else{
           //findOne
-          console.log("ddddd");
+          console.log("ddddd"+kakaousers.date+"dddddd"+d.getDay());
               bible.findOne({
                   'seq': Math.floor(Math.random() * 23144) + 1,
                   'singu' : "구약"
