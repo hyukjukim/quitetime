@@ -239,7 +239,7 @@ Kakaouser.findOneAndUpdate({
 }, {
     new: true
 }, function(err, users) {
-console.log('18');
+console.log("123");
     if (err) {
         console.log("Something wrong when updating data!");
     }
@@ -251,6 +251,7 @@ console.log('18');
     Kakaouser.findOne({
         'user_key': req.body.user_key,
     }, function(err, users) {
+      console.log("456");
         if (err) return res.json(err);
         obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
         kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
@@ -272,6 +273,7 @@ console.log('18');
                   'seq': Math.floor(Math.random() * 23144) + 1,
                   'singu' : "구약"
               }, function(err, users) {
+                console.log("456");
                   if (err) return res.json(err);
                   obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
                   bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
