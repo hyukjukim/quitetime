@@ -25,6 +25,9 @@ var kakaouserSchema = mongoose.Schema({
     date: {
         type: String
     },
+    date2: {
+        type: String
+    },    
     password: {
         type: String
     },
