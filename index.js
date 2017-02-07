@@ -247,26 +247,47 @@ console.log('18');
     kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
 });
 //findOneAndUpdate
-
 //findOne
-    bible.findOne({
-        'seq': Math.floor(Math.random() * 23144) + 1,
-        'singu' : "구약"
+    Kakaouser.findOne({
+        'user_key': req.body.user_key,
     }, function(err, users) {
         if (err) return res.json(err);
         obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
-        bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
-                res.send({
-                  "message": {
-                    "text": "["+bibles.name+"]\n"+bibles.content},
-                  "keyboard": {
-                    "type": "buttons",
-                    "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
-                  }
-                });
+        kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+        if(kakaousers.date===d.getDay()){
+          res.send({
+            "message": {
+              "text": "하루에 한번만 이용 가능 합니다."},
+            "keyboard": {
+              "type": "buttons",
+              "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
+            }
+          });
+        }
+        else{
+          //findOne
+              bible.findOne({
+                  'seq': Math.floor(Math.random() * 23144) + 1,
+                  'singu' : "구약"
+              }, function(err, users) {
+                  if (err) return res.json(err);
+                  obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+                  bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+                          res.send({
+                            "message": {
+                              "text": "["+bibles.name+"]\n"+bibles.content},
+                            "keyboard": {
+                              "type": "buttons",
+                              "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
+                            }
+                          });
 
+              });
+          //findOne
+        }
     });
 //findOne
+
 
     }
     else if (req.body.content === '신약QT(랜덤)'){
