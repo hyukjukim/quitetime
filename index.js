@@ -126,9 +126,14 @@ console.log('1');
       Kakaouser.create({
           user_key: req.body.user_key,
           name_flag: '1',
-          password_flag: '0',
-          email_flag: '0',
-          name: ''
+          church_name: '0',
+          score: '0',
+          name: '',
+          date: '0',
+          password: '0',
+          email: '0',
+          temp1: '0',
+          temp2: '0'
       },{
           new: true
       }, function(err, users) {
@@ -139,20 +144,20 @@ console.log('2');
         },
         "keyboard": {
           "type": "buttons",
-          "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+          "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
         }
       });
       });
     }
 
-    else if(req.body.content === '▶▶옆으로이동'){
+    else if(req.body.content === '☞☞옆으로넘기기'){
       res.send({
         "message": {
-          "text": "옆으로 이동은 누르는 버튼이 아니라 옆으로 넘겨보라는 뜻이예요.",
+          "text": "☞☞옆으로넘기기는 버튼이 아니라 손가락을 사용하여 옆으로 넘겨보라는 뜻이예요.",
         },
         "keyboard": {
           "type": "buttons",
-          "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+          "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
         }
       });
     }
@@ -173,7 +178,7 @@ console.log('5');
                       "text": kakaousers.name+"님!!!\n반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?) \n\n 바쁜 일이 많아서 2/7일부터 추가 개발이 있을 예정입니다."},
                     "keyboard": {
                       "type": "buttons",
-                      "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+                      "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
                     }
                   });
                 }
@@ -185,7 +190,7 @@ console.log('5');
                           },
                           "keyboard": {
                             "type": "buttons",
-                            "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+                            "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
                           }
                         });
                       }
@@ -198,7 +203,7 @@ console.log('5');
 console.log('9');
       res.send({
         "message": {
-          "text": "안녕하세요.\n 저는 ERP DB, Node.js Programmer 입니다. \n컴퓨터과학 전공을 하였으며, \nAI 와 Chatbot 개발을 연구 중입니다. \n개발 관련 궁금한 사항 및 \n건의 or 사업 제안사항 있으시면 \nnode-js@naver.com으로 메일 주세요",
+          "text": "안녕하세요.\n 저는 Programmer 입니다. \n컴퓨터과학 전공을 하였으며, \nAI 와 Chatbot을 개발 중입니다. \n개발 관련 궁금한 사항 및 \n건의 or 사업 제안사항 있으시면 \nnode-js@naver.com으로 메일 주세요",
           "photo": {
             "url": "http://khj.heroku.com/images/master.jpg",
             "width": 640,
@@ -240,7 +245,7 @@ console.log('16');
                     "text": "["+bibles.name+"]\n"+bibles.content},
                   "keyboard": {
                     "type": "buttons",
-                    "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+                    "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
                   }
                 });
 
@@ -260,7 +265,7 @@ bible.findOne({
                 "text": "["+bibles.name+"]\n"+bibles.content},
               "keyboard": {
                 "type": "buttons",
-                "buttons": ["구약QT(랜덤)","신약QT(랜덤)","▶▶옆으로이동","닉네임설정","처음으로","개발자소개"]
+                "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
               }
             });
 

@@ -10,8 +10,20 @@ var kakaouserSchema = mongoose.Schema({
         type: String,
         unique: true
     },
-    name: {
+    name_flag: {
         type: String,
+    },
+    church_name: {
+        type: String
+    },
+    score: {
+        type: String
+    },
+    name: {
+        type: String
+    },
+    date: {
+        type: String
     },
     password: {
         type: String
@@ -19,13 +31,10 @@ var kakaouserSchema = mongoose.Schema({
     email: {
         type: String
     },
-    name_flag: {
+    temp1: {
         type: String
     },
-    password_flag: {
-        type: String
-    },
-    email_flag: {
+    temp2: {
         type: String
     }
 });
