@@ -139,7 +139,7 @@ console.log('1');
 console.log('2');
       res.send({
         "message": {
-          "text": "샬롬.\n 자동응답 QT 프로그램에 오신 것을 환영합니다. \n\n\n본 프로그램은 2017년 2월 3일 \n최초 개발 되었으며 다양한 방법으로 \n서비스가 발전되어 나갈 예정입니다.\n\n다양한 명령어를 체험하시려면 \n버튼을 옆으로 이동하여 주세요."
+          "text": "샬롬.\n자동응답 QT 프로그램에 오신 것을 환영합니다. \n\n\n본 프로그램은 2017년 2월 3일 \n최초 개발 되었으며 다양한 방법으로 \n서비스가 발전되어 나갈 예정입니다.\n\n다양한 명령어를 체험하시려면 \n버튼을 옆으로 이동하여 주세요."
         },
         "keyboard": {
           "type": "buttons",
@@ -396,6 +396,33 @@ console.log('18');
             kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
         });
 
+      }
+//필살 초기화키
+      else if (req.body.content === '초기화'){
+          //findOneAndUpdate
+          Kakaouser.findOneAndUpdate({
+              'user_key': req.body.user_key
+          }, {
+              'date' : '0',
+              'date2': '0'
+          }, {
+              new: true
+          }, function(err, users) {
+              if (err) {
+                  console.log("Something wrong when updating data!");
+              }
+              obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+              kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+              res.send({
+                "message": {
+                  "text": "예스, 마스터.\n절대 권한으로 초기화 완료 되었습니다."},
+                "keyboard": {
+                  "type": "buttons",
+                  "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
+                }
+              });
+          });
+          //findOneAndUpdate
       }
       else {
 
