@@ -255,6 +255,7 @@ console.log('18');
         obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
         kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
         if(kakaousers.date===d.getDay()){
+          console.log("@@@@");
           res.send({
             "message": {
               "text": "하루에 한번만 이용 가능 합니다."},
@@ -266,6 +267,7 @@ console.log('18');
         }
         else{
           //findOne
+          console.log("ddddd");
               bible.findOne({
                   'seq': Math.floor(Math.random() * 23144) + 1,
                   'singu' : "구약"
