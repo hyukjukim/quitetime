@@ -241,7 +241,7 @@ console.log('10');
         if(kakaousers.date==d.getDay()){
           res.send({
             "message": {
-              "text": "신, 구약 각각 하루에 한번만 이용 가능 합니다."},
+              "text": "신약, 구약 \n각각 하루에 한번만 이용 가능 합니다.\n\n추후 스코어, 교회별 랭크, 초기화 버튼 만들겠습니다."},
             "keyboard": {
               "type": "buttons",
               "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
@@ -302,7 +302,7 @@ console.log('10');
               if(kakaousers.date2==d.getDay()){
                 res.send({
                   "message": {
-                    "text": "신, 구약 각각 하루에 한번만 이용 가능 합니다."},
+                    "text": "신약, 구약 \n각각 하루에 한번만 이용 가능 합니다.\n\n추후 스코어, 교회별 랭크, 초기화 버튼 만들겠습니다."},
                   "keyboard": {
                     "type": "buttons",
                     "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
