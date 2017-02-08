@@ -121,6 +121,7 @@ app.post('/message', function(req, res) {
 
 console.log('1');
     if (req.body.content === '시작'){
+      console.log(d.getDay());
       Kakaouser.create({
           user_key: req.body.user_key,
           name_flag: '1',
@@ -230,7 +231,6 @@ console.log('10');
     }
 
     else if (req.body.content === '구약QT(랜덤)'){
-
 //findOne
     Kakaouser.findOne({
         'user_key': req.body.user_key,
@@ -249,7 +249,6 @@ console.log('10');
           });
         }
         else{
-
           //findOneAndUpdate
           Kakaouser.findOneAndUpdate({
               'user_key': req.body.user_key
