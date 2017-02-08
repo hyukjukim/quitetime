@@ -119,7 +119,6 @@ app.get('/keyboard', function(req, res) {
 
 app.post('/message', function(req, res) {
 
-console.log('1');
     if (req.body.content === '시작'){
 
       Kakaouser.create({
@@ -137,7 +136,6 @@ console.log('1');
       },{
           new: true
       }, function(err, users) {
-console.log('2');
       res.send({
         "message": {
           "text": "샬롬.\n자동응답 QT 프로그램에 오신 것을 환영합니다. \n\n\n본 프로그램은 2017년 2월 3일 \n최초 개발 되었으며 다양한 방법으로 \n서비스가 발전되어 나갈 예정입니다.\n\n기본 큐티 이외의\n다양한 명령어를 체험하시려면 \n버튼을 옆으로 이동하여 주세요."
@@ -151,7 +149,6 @@ console.log('2');
     }
 
     else if(req.body.content === '☞☞옆으로넘기기'){
-        console.log("@@"+d.getDay());
       res.send({
         "message": {
           "text": "☞☞옆으로넘기기는 버튼이 아니라 손가락을 사용하여 옆으로 넘겨보라는 뜻이예요.",
@@ -163,17 +160,13 @@ console.log('2');
       });
     }
     else if(req.body.content === '처음으로'){
-console.log('4');
       Kakaouser.findOne({
           'user_key': req.body.user_key
       }, function(err, users) {
-console.log('5');
           if (err) return res.json(err);
           obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
           kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
-          console.log('6');
                 if(kakaousers.name_flag === '3'){
-          console.log('7');
                   res.send({
                     "message": {
                       "text": kakaousers.name+"님!!!\n반갑습니다. 닉네임은 계속 바꿀 수 있으세요. (추후 변경 안되도록 막을 예정이니 선점하시는 것도 좋겠죠?) \n\n 바쁜 일이 많아서 2/7일부터 추가 개발이 있을 예정입니다."},
@@ -184,7 +177,6 @@ console.log('5');
                   });
                 }
                 else{
-          console.log('8');
                         res.send({
                           "message": {
                             "text": "안녕하세요...아직 닉네임 생성을 안하셨네요? ㅎㅎ 괜찮아요 아직은 닉네임이 꼭 필요한 것이 아니거든요..^^",
@@ -201,7 +193,6 @@ console.log('5');
     }
 
     else if (req.body.content === '개발자소개') {
-console.log('9');
       res.send({
         "message": {
           "text": "안녕하세요.\n 저는 Programmer 입니다. \n컴퓨터과학 전공을 하였으며, \nAI 와 Chatbot을 개발 중입니다. \n개발 관련 궁금한 사항 및 \n건의 or 사업 제안사항 있으시면 \nnode-js@naver.com으로 메일 주세요",
@@ -221,7 +212,6 @@ console.log('9');
     }
 
     else if (req.body.content === '닉네임설정') {
-console.log('10');
           //hero.creatHero(req,res);
           res.send({
               "message": {
@@ -270,7 +260,6 @@ console.log('10');
                   'seq': Math.floor(Math.random() * 23144) + 1,
                   'singu' : "구약"
               }, function(err, users) {
-                console.log("456");
                   if (err) return res.json(err);
                   obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
                   bibles = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
@@ -352,7 +341,6 @@ console.log('10');
     }
 
       else if (req.body.content === '생성완료'){
-console.log('16');
         res.send({
           "message": {
             "text": "닉네임 생성을 축하드립니다. \n 앞으로 방을 나갔다가 다시 들어오셔도, 님의 이름을 항상 기억할 것 입니다. 해당 기능을 사용하여 추후 많은 컨텐츠를 제작 할 예정이니, 기대하셔도 좋습니다. ^^"
@@ -366,7 +354,6 @@ console.log('16');
         });
       }
       else if (req.body.content === '생성취소'){
-console.log('17');
         res.send({
           "message": {
             "text": "앗 맘에 안드신다구요? 난 "+ kakaousers.name +"좋은데.. 얼른 다시 생성해봐요.. "
@@ -388,7 +375,6 @@ console.log('17');
         }, {
             new: true
         }, function(err, users) {
-console.log('18');
             if (err) {
                 console.log("Something wrong when updating data!");
             }
@@ -424,9 +410,30 @@ console.log('18');
           });
           //findOneAndUpdate
       }
+      //필살 현재 날짜 값 보기
+      else if (req.body.content === '날짜 보기'){
+        //findOne
+            Kakaouser.findOne({
+                'user_key': req.body.user_key
+            }, function(err, users) {
+                if (err) return res.json(err);
+                obj = JSON.stringify(users); //객체 또는 배열을 인자로 받아 string을 json 형식으로 변경
+                kakaousers = JSON.parse(obj); //json 파싱하기 위해 변수에 배정
+                res.send({
+                  "message": {
+                    "text": "예스, 마스터.\n날짜 당연히 보여 드려야죠\n 마스터신데...후후...\n현재 날짜는 "+d.getDay()+"이며,\n db에 기록되어 있는 날짜는\n"+"구약 :"+kakaousers.date+"\n신약 :"+kakaousers.date2+" 입니다."},
+                  "keyboard": {
+                    "type": "buttons",
+                    "buttons": ["구약QT(랜덤)","신약QT(랜덤)","☞☞옆으로넘기기","닉네임설정","처음으로","개발자소개"]
+                  }
+                });
+
+            });
+        //findOne
+      }
+
       else {
 
-console.log('19');
         Kakaouser.findOneAndUpdate({
             'user_key': req.body.user_key
         }, {
@@ -435,7 +442,6 @@ console.log('19');
         }, {
             new: true
         }, function(err, users) {
-console.log('20');
             if (err) {
                 console.log("Something wrong when updating data!");
             }
