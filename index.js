@@ -121,7 +121,7 @@ app.post('/message', function(req, res) {
 
 console.log('1');
     if (req.body.content === '시작'){
-      console.log(d.getDay());
+
       Kakaouser.create({
           user_key: req.body.user_key,
           name_flag: '1',
@@ -151,6 +151,7 @@ console.log('2');
     }
 
     else if(req.body.content === '☞☞옆으로넘기기'){
+        console.log(d.getDay());
       res.send({
         "message": {
           "text": "☞☞옆으로넘기기는 버튼이 아니라 손가락을 사용하여 옆으로 넘겨보라는 뜻이예요.",
