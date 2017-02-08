@@ -151,7 +151,7 @@ console.log('2');
     }
 
     else if(req.body.content === '☞☞옆으로넘기기'){
-        console.log(d.getDay());
+        console.log("@@"+d.getDay());
       res.send({
         "message": {
           "text": "☞☞옆으로넘기기는 버튼이 아니라 손가락을 사용하여 옆으로 넘겨보라는 뜻이예요.",
