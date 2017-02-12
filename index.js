@@ -389,8 +389,8 @@ app.post('/message', function(req, res) {
           Kakaouser.findOneAndUpdate({
               'user_key': req.body.user_key
           }, {
-              'date' : '0',
-              'date2': '0'
+              'date' : '-1',
+              'date2': '-1'
           }, {
               new: true
           }, function(err, users) {
