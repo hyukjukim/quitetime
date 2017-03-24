@@ -187,7 +187,6 @@ app.post('/message', function(req, res) {
                           }
                         });
                       }
-
       });
 
     }
