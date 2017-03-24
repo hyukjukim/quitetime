@@ -176,6 +176,7 @@ app.post('/message', function(req, res) {
                     }
                   });
                 }
+                
                 else{
                         res.send({
                           "message": {
@@ -187,7 +188,7 @@ app.post('/message', function(req, res) {
                           }
                         });
                       }
-                      
+
       });
 
     }
